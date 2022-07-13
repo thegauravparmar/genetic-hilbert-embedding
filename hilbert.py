@@ -11,9 +11,9 @@ def gilbert2d(width, height):
     """
 
     if width >= height:
-        yield from generate2d(1, 1, width, 0, 0, height)
+        yield from generate2d(0, 0, width, 0, 0, height)
     else:
-        yield from generate2d(1, 1, 0, height, width, 0)
+        yield from generate2d(0, 0, 0, height, width, 0)
 
 
 def sgn(x):
