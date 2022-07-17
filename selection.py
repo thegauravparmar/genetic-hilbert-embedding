@@ -1,9 +1,8 @@
-def selection(fitnessArray, usedPop):
-    global bestFittest
+def selectionFunction(fitnessArray, usedPop, selectionArray):
 
     dict_obj = {}
 
-    for i in range(iter):
+    for i in range(4):
         dict_obj[fitnessArray[i]] = usedPop[i]
 
     for x in sorted(dict_obj.keys(), reverse=True):

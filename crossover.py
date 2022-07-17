@@ -1,6 +1,6 @@
 # need to modify according to the current code
 
-def crossover(pop, w):
+def crossoverFunction(pop, w):
     child = []*w
     for i in range(0, w, 2):
         data = pop[i]
