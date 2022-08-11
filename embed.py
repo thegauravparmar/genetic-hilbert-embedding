@@ -13,6 +13,22 @@ def genPoint(offsetX, offsetY, x, y):
     return x, y
 
 
+def genPointX(offsetX, offsetY, x, y):
+    for i in range(512*512):
+        x[i] = (x[i]+offsetX) % 512
+    for i in range(512*512):
+        y[i] = 511-((y[i]+offsetY) % 512)
+    return x, y
+
+
+def genPointY(offsetX, offsetY, x, y):
+    for i in range(512*512):
+        x[i] = 511-((x[i]+offsetX) % 512)
+    for i in range(512*512):
+        y[i] = (y[i]+offsetY) % 512
+    return x, y
+
+
 def encodeImage(image, x, y, sbDir, sbPole, secretData):
     secretDataIndex = 0
     if sbDir == 1:
@@ -57,7 +73,16 @@ def encodeFunction(strr, image, secretData):
     xOff = int(xValue, 2)
     yOff = int(yValue, 2)
     x, y = hilbert.genHilbert(512, 512)
-    x, y = genPoint(xOff, yOff, x, y)
-    stegoImage = encodeImage(image, x, y, int(sbDir), int(sbPole), secretData)
+    x1, y1 = genPoint(xOff, yOff, x, y)
+    stegoImage1 = encodeImage(
+        image, x1, y1, int(sbDir), int(sbPole), secretData)
+    x, y = hilbert.genHilbert(512, 512)
+    x2, y2 = genPointX(xOff, yOff, x, y)
+    stegoImage2 = encodeImage(
+        image, x2, y2, int(sbDir), int(sbPole), secretData)
+    x, y = hilbert.genHilbert(512, 512)
+    x3, y3 = genPointY(xOff, yOff, x, y)
+    stegoImage3 = encodeImage(
+        image, x3, y3, int(sbDir), int(sbPole), secretData)
 
-    return stegoImage
+    return stegoImage1, stegoImage2, stegoImage3
